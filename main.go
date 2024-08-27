@@ -17,7 +17,7 @@ func main() {
 	router := gin.Default()
 
 	// Define routes and handlers
-	router.POST("/tasks",	p.AddTask)
+	router.POST("/tasks", p.AddTask)
 
 	router.GET("/tasks/:id", p.GetTask)
 	//   router.PUT("/tasks/:id/priority", p.SetPriority)
