@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"log"
 )
 
 type Task struct {
@@ -99,4 +100,34 @@ func (p *Planner) UpdateTaskDone(c *gin.Context) {
 	p.Tasks[id] = task
 
 	c.JSON(http.StatusOK, task)
+}
+
+func (p *Planner) UpdateTask(c *gin.Context) {
+	 log.Println("Entering UpdateTask function")
+	id,err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		  log.Println("Error parsing ID:", err)
+		c.JSON(http.StatusBadRequest,gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	task,found := p.Tasks[id]
+	if !found {
+		 log.Println("Task not found for ID:", id)
+		c.JSON(http.StatusBadRequest,gin.H{"error": "Task Not Found"})
+		return
+	}
+	var updatedTask Task
+		if err := c.ShouldBindJSON(&updatedTask); err != nil {
+	   log.Println("Error binding JSON:", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+}
+
+	updatedTask.ID = task.ID;
+
+	updatedTask.Priority = task.Priority
+
+	p.Tasks[id] = updatedTask
+	c.JSON(http.StatusOK,updatedTask)
 }

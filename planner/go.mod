@@ -4,7 +4,6 @@ go 1.22.6
 
 require (
 	github.com/gin-gonic/gin v1.10.0
-	github.com/magiconair/properties v1.8.7
 	github.com/stretchr/testify v1.9.0
 )
 
