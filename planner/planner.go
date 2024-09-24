@@ -40,7 +40,9 @@ func (p *Planner) GetTask(c *gin.Context) {
 func (p *Planner) Reset(c *gin.Context) {
     p.Tasks = make(map[int]Task)
     p.NextID = 0
+	if c != nil{
     c.JSON(http.StatusOK, gin.H{"status": "Planner state reset"})
+	}
 }
 
 

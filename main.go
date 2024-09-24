@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"planner"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -13,15 +14,16 @@ func main() {
 	}
 
 	// Log the initialization of the Planner
+	p.Reset(nil)
 
-	router := gin.Default()
+	r:= gin.Default()
 
-	// Define routes and handlers
-	router.POST("/tasks", p.AddTask)
-
-	router.GET("/tasks/:id", p.GetTask)
-	//   router.PUT("/tasks/:id/priority", p.SetPriority)
-
-	router.PATCH("/tasks/:id/done", p.UpdateTaskDone)
-	router.Run(":8080")
+// Define your routes
+	r.POST("/tasks", p.AddTask)
+	r.PUT("/tasks/:id", p.UpdateTask)
+	r.GET("/tasks/:id", p.GetTask)
+	r.PUT("/tasks/:id/done", p.UpdateTaskDone)
+	r.DELETE("/reset", p.Reset)
+	r.Run(":8080")
+	
 }
